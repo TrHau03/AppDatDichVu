@@ -3,6 +3,7 @@ export const colors = {
   secondary: '#03dac6',
   background: '#f6f6f6',
   surface: '#ffffff',
+  red: '#b00020',
   error: '#b00020',
   text: '#000000',
   disabled: '#f0f0f0',
@@ -14,4 +15,6 @@ export const colors = {
   gray3: '#c6c6c6',
   gray4: '#8e8e8e',
   gray5: '#4a4a4a',
+  blue: '#053F71',
+  blueBG: '#DFEFFF',
 };

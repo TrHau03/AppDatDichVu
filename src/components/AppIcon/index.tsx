@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import { normalize } from '../../utils/normalize';
+import { padding } from '../../config/styles/spacing';
 
 // ...existing code...
 type IconProps = {
@@ -107,7 +107,7 @@ const Icons: React.FC<IconProps> = ({
       </View>
     ) : (
       <Pressable
-        style={[containerStyle, { padding: normalize(8), zIndex: 9999 }]}
+        style={[containerStyle, { padding: padding.sm, zIndex: 9999 }]}
         onPress={onPress}
       >
         <IconComponent name={name as any} size={sizeIcon[size]} color={color} />

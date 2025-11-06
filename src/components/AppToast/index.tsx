@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
   },
   container: {
     position: 'absolute',
-    top: Platform.OS === 'android' ? normalize(30) : normalize(60),
+    top: Platform.OS === 'android' ? normalize(50) : normalize(60),
     left: '5%',
     right: '5%',
     backgroundColor: colors.white,
@@ -337,6 +337,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     flex: 1,
+    paddingHorizontal: padding.sm,
   },
   title: {
     fontSize: normalize(16),

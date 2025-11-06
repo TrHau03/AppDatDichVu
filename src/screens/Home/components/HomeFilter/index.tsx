@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icons from '../../../../components/AppIcon';
 import { colors } from '../../../../config/styles/color';
+import { useDebounce } from '../../../../hooks/useDebounce';
 import { styles } from './styles';
 
 enum ActionType {
@@ -25,6 +26,11 @@ interface Action {
   payload?: any;
 }
 
+interface HomeFilterProps {
+  onSearch: (text: string) => void;
+  onActionChange: (action: 'now' | 'later') => void;
+}
+
 const reducer = (state: InitialState, action: Action) => {
   switch (action.type) {
     case 'SET_SEARCH_TEXT':
@@ -39,10 +45,16 @@ const initialState = {
   searchText: '',
   action: 'now',
 };
-const HomeFilter = () => {
+
+const HomeFilter = ({ onSearch, onActionChange }: HomeFilterProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const nowScale = React.useRef(new Animated.Value(1)).current;
   const laterScale = React.useRef(new Animated.Value(1)).current;
+  const debounce = useDebounce(state.searchText, 500);
+
+  React.useEffect(() => {
+    onSearch(debounce);
+  }, [debounce]);
 
   const onChangeText = (text: string) => {
     dispatch({ type: 'SET_SEARCH_TEXT', payload: text });
@@ -79,15 +91,17 @@ const HomeFilter = () => {
           style={styles.inputContainer}
           placeholder="Tìm kiếm dịch vụ..."
         />
-        <Pressable onPress={clearSearch}>
-          <Icons
-            name="close"
-            el="Ionicons"
-            size="sm"
-            isPaddingIcon={false}
-            color={colors.gray4}
-          />
-        </Pressable>
+        {state.searchText.length > 0 && (
+          <Pressable onPress={clearSearch}>
+            <Icons
+              name="close"
+              el="Ionicons"
+              size="sm"
+              isPaddingIcon={false}
+              color={colors.gray4}
+            />
+          </Pressable>
+        )}
       </View>
       <View style={styles.actionContainer}>
         <TouchableOpacity
@@ -106,6 +120,7 @@ const HomeFilter = () => {
               name="flash"
               el="Ionicons"
               isPaddingIcon={false}
+              size="sm"
               color={
                 state.action === ActionType.Now ? colors.primary : colors.black
               }
@@ -132,6 +147,7 @@ const HomeFilter = () => {
             <Icons
               name="calendar-outline"
               el="Ionicons"
+              size="sm"
               isPaddingIcon={false}
               color={
                 state.action === ActionType.Later

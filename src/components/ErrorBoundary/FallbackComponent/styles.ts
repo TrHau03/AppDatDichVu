@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { margin } from '../../../config/styles/spacing';
 import Device from '../../../utils/device';
 
 const styles = StyleSheet.create({
@@ -24,12 +25,12 @@ const styles = StyleSheet.create({
   heading: {
     fontWeight: 'bold',
     fontSize: 20,
-    marginVertical: 10,
+    marginVertical: margin.lg,
   },
   description: {
     textAlign: 'center',
-    marginHorizontal: 20,
-    marginBottom: 40,
+    marginHorizontal: margin.xl,
+    marginBottom: margin.lg,
     fontSize: 16,
   },
 });

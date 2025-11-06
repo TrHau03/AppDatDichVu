@@ -1,79 +1,48 @@
-import React, { useCallback } from 'react';
-import { FlatList } from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import { FlatList, RefreshControl } from 'react-native';
 import Wrapper from '../../components/Wrapper';
+import { padding } from '../../config/styles/spacing';
+import { mockServices } from '../../helper/data';
 import { HomeFilter, HomeHeader, ServiceItem } from './components';
 import { Service } from './components/ServiceItem/type';
+import { styles } from './styles';
 
 const Home = () => {
+  const [data, setData] = useState(mockServices);
+  const keyExtractor = useCallback((item: Service) => item.id, []);
+
   const renderItem = useCallback(
     ({ item }: { item: Service }) => <ServiceItem service={item} />,
     [],
   );
 
+  const refreshControl = useMemo(() => {
+    return <RefreshControl refreshing={false} onRefresh={() => {}} />;
+  }, []);
+
+  const handleActionChange = (action: 'now' | 'later') => {};
+
+  const handleSearch = (text: string) => {
+    setData(
+      mockServices.filter(service =>
+        service.name.toLowerCase().includes(text.toLowerCase()),
+      ),
+    );
+  };
+
   return (
-    <Wrapper isSafeArea>
+    <Wrapper isSafeArea containerStyle={styles.container}>
       <HomeHeader />
-      <HomeFilter />
+      <HomeFilter onSearch={handleSearch} onActionChange={handleActionChange} />
       <FlatList
-        data={mockServices}
+        data={data}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={keyExtractor}
+        refreshControl={refreshControl}
+        contentContainerStyle={{ gap: padding.md, paddingBottom: padding.md }}
       />
     </Wrapper>
   );
 };
 
 export default Home;
-
-const mockServices: Service[] = [
-  {
-    id: '1',
-    name: 'Cắt tóc nam',
-    price: 150000,
-    points: 4.5,
-    provider: 'Salon ABC',
-    distance: 1.2,
-    type: 'Tại tiệm',
-    imageUrl: ['url1', 'url2', 'url3', 'url4', 'url5'],
-  },
-  {
-    id: '2',
-    name: 'Nhuộm tóc nữ',
-    price: 500000,
-    points: 4.8,
-    provider: 'Hair Studio XYZ',
-    distance: 2.5,
-    type: 'Tại tiệm',
-    imageUrl: ['url1', 'url2', 'url3', 'url4', 'url5'],
-  },
-  {
-    id: '3',
-    name: 'Gội đầu massage',
-    price: 80000,
-    points: 4.2,
-    provider: 'Spa Relax',
-    distance: 0.8,
-    type: 'Phục vụ tại nhà',
-    imageUrl: ['url1', 'url2', 'url3', 'url4', 'url5'],
-  },
-  {
-    id: '4',
-    name: 'Uốn tóc',
-    price: 350000,
-    points: 4.6,
-    provider: 'Beauty House',
-    distance: 3.0,
-    type: 'Tại tiệm',
-    imageUrl: ['url1', 'url2', 'url3', 'url4', 'url5'],
-  },
-  {
-    id: '5',
-    name: 'Duỗi tóc',
-    price: 400000,
-    points: 4.7,
-    provider: 'Hair Care Pro',
-    distance: 1.5,
-    type: 'Phục vụ tại nhà',
-    imageUrl: ['url1', 'url2', 'url3', 'url4', 'url5'],
-  },
-];

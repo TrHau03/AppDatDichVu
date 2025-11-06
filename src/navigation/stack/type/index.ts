@@ -9,8 +9,11 @@ export enum RootStackEnum {
 export type RootStackParamList = {
   [RootStackEnum.Home]: undefined;
   [RootStackEnum.ServiceDetail]: { serviceId: string };
-  [RootStackEnum.BookService]: { serviceId: string; date: string };
-  [RootStackEnum.PaymentMethod]: { bookingId: string };
+  [RootStackEnum.BookService]: {
+    serviceId: string;
+    moreServicesTotal?: number;
+  };
+  [RootStackEnum.PaymentMethod]: undefined;
 };
 
 export type StackNavigationProps = StackNavigationProp<RootStackParamList>;

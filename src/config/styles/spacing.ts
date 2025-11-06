@@ -2,7 +2,7 @@ import { getPadding } from '../../utils/normalize';
 
 export const padding = {
   xs: getPadding(4),
-  sm: getPadding(8),
+  sm: getPadding(12),
   md: getPadding(16),
   lg: getPadding(24),
   xl: getPadding(32),

@@ -38,13 +38,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   activeNowActionContainer: {
-    backgroundColor: colors.gray1,
+    backgroundColor: colors.white,
   },
   searchContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.gray1,
+    backgroundColor: colors.white,
     paddingHorizontal: padding.sm,
     borderRadius: borderRadius.md,
   },
