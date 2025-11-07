@@ -9,7 +9,9 @@ import { styles } from './styles';
 const UserProfile = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.root.user.profile);
-
+  const timeForBooking = useAppSelector(
+    state => state.root.user.dateForBooking,
+  );
   const [modalVisible, setModalVisible] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [description, setDescription] = useState(
@@ -90,7 +92,9 @@ const UserProfile = () => {
       </View>
       <View style={styles.contentContainer}>
         <Icons name="clock" size="md" el="Entypo" isPaddingIcon={false} />
-        <Text style={styles.typeText}>Hình thức: {'Dịch vụ tại nhà'}</Text>
+        <Text style={styles.typeText}>
+          Hình thức: {timeForBooking === 'now' ? 'Làm ngay' : 'Làm sau'}
+        </Text>
       </View>
 
       <EditUserModal

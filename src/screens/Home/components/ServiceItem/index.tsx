@@ -55,7 +55,7 @@ const ServiceItem = ({ service }: { service: Service }) => {
         <View style={styles.headerLeft}>
           <Text style={styles.name}>{service.name}</Text>
           <Text style={styles.details}>
-            {service.points} • {service.provider} • {service.distance}
+            {service.points}* • {service.provider} • {service.distance}m
           </Text>
         </View>
         <View style={styles.headerRight}>

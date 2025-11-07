@@ -17,4 +17,5 @@ export type UserState = {
       cardNumber: string | null;
     }[];
   };
+  dateForBooking: 'now' | Date;
 };

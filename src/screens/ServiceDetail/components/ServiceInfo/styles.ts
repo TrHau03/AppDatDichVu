@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { colors } from '../../../../config/styles/color';
-import { padding } from '../../../../config/styles/spacing';
+import { margin, padding } from '../../../../config/styles/spacing';
 import { getFontSize } from '../../../../utils/normalize';
 
 export const styles = StyleSheet.create({
   container: {
     gap: padding.sm,
     paddingHorizontal: padding.md,
+    marginBottom: margin.md,
   },
   openingHoursContainer: {
     flexDirection: 'row',

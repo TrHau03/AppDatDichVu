@@ -37,7 +37,10 @@ const AppHeader = ({ isSafeArea, title, rightComponent }: AppHeaderProps) => {
         />
       </Pressable>
       {title && (
-        <Text style={styles.title} numberOfLines={1}>
+        <Text
+          style={[styles.title, { maxWidth: rightComponent ? '55%' : '70%' }]}
+          numberOfLines={1}
+        >
           {title}
         </Text>
       )}

@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: getFontSize(18),
     fontWeight: 'bold',
-    maxWidth: '55%',
   },
   backButton: {
     padding: padding.sm,

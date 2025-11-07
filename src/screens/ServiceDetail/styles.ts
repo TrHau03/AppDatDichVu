@@ -19,6 +19,5 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '70%',
     paddingTop: padding.md,
-    gap: padding.md,
   },
 });

@@ -69,4 +69,13 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '600',
   },
+  inputError: {
+    borderColor: '#ff0000',
+    borderWidth: 1,
+  },
+  errorText: {
+    color: '#ff0000',
+    fontSize: getFontSize(12),
+    marginTop: 4,
+  },
 });

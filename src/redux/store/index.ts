@@ -7,7 +7,7 @@ const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   timeout: 10000,
-  whitelist: ['app', 'services'], // cho phép persist các reducer vào storage
+  whitelist: ['app', 'services', 'user'], // cho phép persist các reducer vào storage
   blacklist: [],
 };
 

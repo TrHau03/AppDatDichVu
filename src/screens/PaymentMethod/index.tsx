@@ -7,6 +7,7 @@ import Icons from '../../components/AppIcon';
 import Wrapper from '../../components/Wrapper';
 import { useAppSelector } from '../../hooks/useRedux';
 import { UserActions } from '../../redux/features/user/userReducer';
+import { ToastRef } from '../../utils/globalRefs';
 import AddPaymentModal from './components/AddPaymentModal';
 import { styles } from './styles';
 
@@ -34,6 +35,10 @@ const PaymentMethod = () => {
       cardNumber: paymentData.cardNumber,
     };
     dispatch(UserActions.addCard(newCard));
+    ToastRef.current?.show({
+      title: 'Thông báo',
+      description: 'Thêm phương thức thanh toán thành công',
+    });
   };
 
   const handleRemovePayment = (id: string) => {
@@ -42,6 +47,10 @@ const PaymentMethod = () => {
         id,
       }),
     );
+    ToastRef.current?.show({
+      title: 'Thông báo',
+      description: 'Xoá phương thức thanh toán thành công',
+    });
   };
 
   const maskCardNumber = (cardNumber: string, type: 'bank' | 'wallet') => {

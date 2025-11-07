@@ -27,6 +27,7 @@ const initialState: UserState = {
       },
     ],
   },
+  dateForBooking: 'now',
 };
 
 const UserReducer = createSlice({
@@ -46,6 +47,9 @@ const UserReducer = createSlice({
       state.payment.cards = state.payment.cards.filter(
         card => card.id !== action.payload.id,
       );
+    },
+    updateDateForBooking: (state, action) => {
+      state.dateForBooking = action.payload;
     },
   },
 });

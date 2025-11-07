@@ -29,7 +29,6 @@ export const styles = StyleSheet.create({
     color: colors.primary,
   },
   nowActionContainer: {
-    flex: 1,
     backgroundColor: colors.gray2,
     padding: padding.sm,
     gap: padding.sm,

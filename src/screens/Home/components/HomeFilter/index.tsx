@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useReducer } from 'react';
+import React, { memo, useCallback, useReducer, useState } from 'react';
 import {
   Animated,
   Pressable,
@@ -7,9 +7,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import DatePicker from 'react-native-date-picker';
 import Icons from '../../../../components/AppIcon';
 import { colors } from '../../../../config/styles/color';
 import { useDebounce } from '../../../../hooks/useDebounce';
+import { useAppDispatch } from '../../../../hooks/useRedux';
+import { UserActions } from '../../../../redux/features/user/userReducer';
 import { styles } from './styles';
 
 enum ActionType {
@@ -22,7 +25,7 @@ interface InitialState {
   action: 'now' | 'later';
 }
 interface Action {
-  type: string;
+  type: 'SET_SEARCH_TEXT' | 'SET_ACTION';
   payload?: any;
 }
 
@@ -47,7 +50,10 @@ const initialState = {
 };
 
 const HomeFilter = ({ onSearch, onActionChange }: HomeFilterProps) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatchReducer] = useReducer(reducer, initialState);
+  const dispatch = useAppDispatch();
+  const [datePicker, setDatePicker] = useState<Date>(new Date());
+  const [openDatePicker, setOpenDatePicker] = useState(false);
   const nowScale = React.useRef(new Animated.Value(1)).current;
   const laterScale = React.useRef(new Animated.Value(1)).current;
   const debounce = useDebounce(state.searchText, 500);
@@ -57,7 +63,7 @@ const HomeFilter = ({ onSearch, onActionChange }: HomeFilterProps) => {
   }, [debounce]);
 
   const onChangeText = (text: string) => {
-    dispatch({ type: 'SET_SEARCH_TEXT', payload: text });
+    dispatchReducer({ type: 'SET_SEARCH_TEXT', payload: text });
   };
 
   const handlePress = (type: ActionType) => {
@@ -75,13 +81,24 @@ const HomeFilter = ({ onSearch, onActionChange }: HomeFilterProps) => {
         useNativeDriver: true,
       }),
     ]).start();
-
-    dispatch({ type: 'SET_ACTION', payload: type });
+    dispatchReducer({ type: 'SET_ACTION', payload: type });
+    if (type === ActionType.Now) {
+      dispatch(UserActions.updateDateForBooking(ActionType.Now));
+    } else {
+      setOpenDatePicker(true);
+    }
   };
 
-  const clearSearch = useCallback(() => {
-    dispatch({ type: 'SET_SEARCH_TEXT', payload: '' });
+  const handleConfirmDate = useCallback((selectedDate: Date) => {
+    setDatePicker(selectedDate);
+    setOpenDatePicker(false);
+    dispatch(UserActions.updateDateForBooking(selectedDate));
   }, []);
+
+  const clearSearch = useCallback(() => {
+    dispatchReducer({ type: 'SET_SEARCH_TEXT', payload: '' });
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
@@ -163,6 +180,22 @@ const HomeFilter = ({ onSearch, onActionChange }: HomeFilterProps) => {
           </Animated.View>
         </TouchableOpacity>
       </View>
+      <DatePicker
+        modal
+        open={openDatePicker}
+        date={datePicker}
+        mode="datetime"
+        minimumDate={new Date()}
+        onConfirm={handleConfirmDate}
+        onCancel={() => {
+          setOpenDatePicker(false);
+          handlePress(ActionType.Now);
+        }}
+        locale="vi"
+        title="Chọn ngày và giờ"
+        confirmText="Xác nhận"
+        cancelText="Hủy"
+      />
     </View>
   );
 };

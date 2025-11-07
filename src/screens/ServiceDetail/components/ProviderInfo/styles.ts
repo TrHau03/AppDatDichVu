@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { borderRadius } from '../../../../config/styles/borderRadius';
 import { colors } from '../../../../config/styles/color';
-import { padding } from '../../../../config/styles/spacing';
+import { margin, padding } from '../../../../config/styles/spacing';
 import { getFontSize } from '../../../../utils/normalize';
 
 export const styles = StyleSheet.create({
@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: padding.md,
     paddingHorizontal: padding.md,
+    marginBottom: margin.md,
   },
   avatar: {
     width: 50,

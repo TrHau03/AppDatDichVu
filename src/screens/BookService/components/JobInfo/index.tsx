@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import Icons from '../../../../components/AppIcon';
+import { useAppSelector } from '../../../../hooks/useRedux';
+import { getDayOfWeek } from '../../../../utils/date';
 import { formatNumber } from '../../../../utils/formatNumber';
 import { styles } from './styles';
 
@@ -11,12 +13,32 @@ interface JobInfoProps {
 }
 
 const JobInfo = ({ price, morePrice, provider }: JobInfoProps) => {
+  const timeForBooking = useAppSelector(
+    state => state.root.user.dateForBooking,
+  );
+
+  const getFormattedTime = () => {
+    if (timeForBooking === 'now') {
+      return 'Làm ngay';
+    }
+
+    const date = new Date(timeForBooking);
+    const hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const dayOfWeek = getDayOfWeek(date) || '';
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+
+    return `${hours}:${minutes} - ${dayOfWeek}, ${day}/${month}`;
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Thông tin công việc</Text>
       <View style={styles.row}>
         <Icons name="clock" size="md" el="Entypo" isPaddingIcon={false} />
-        <Text style={styles.text}>Làm ngay</Text>
+        <Text style={styles.text}>
+          {timeForBooking === 'now' ? 'Làm ngay ' : getFormattedTime()}
+        </Text>
       </View>
       <View style={styles.row}>
         <Icons
@@ -30,7 +52,7 @@ const JobInfo = ({ price, morePrice, provider }: JobInfoProps) => {
       <View style={styles.servicesContainer}>
         <View style={styles.row}>
           <Text style={[styles.text, { flex: 1 }]}>Dịch vụ</Text>
-          <Text style={styles.text}>{formatNumber(price)}</Text>
+          <Text style={styles.text}>{formatNumber(price) || '0'}</Text>
         </View>
         {morePrice && (
           <View style={styles.row}>
