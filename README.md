@@ -2,6 +2,11 @@
 
 ## Bước 1:
 
+- Cài đặt NodeJS theo docs: https://nodejs.org/en/download
+- Cài đặt môi trường cho React Native theo docs: https://reactnative.dev/docs/set-up-your-environment
+
+## Bước 2:
+
 Chạy lệnh bên dưới để install các package
 
 ```sh
@@ -12,7 +17,7 @@ npm i
 yarn install
 ```
 
-# Bước 2:
+# Bước 3:
 
 Build và run app
 
